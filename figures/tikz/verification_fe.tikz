@@ -1,0 +1,34 @@
+\begin{tikzpicture}
+\begin{axis}[xlabel={iteration}, ylabel={Free energy [nats]}, legend pos={north east}, legend cell align={{left}}, scale={1.0}, grid={major}]
+    \addplot[mark={square*}, blue]
+        coordinates {
+            (1,603.2357466969238)
+            (2,457.4918667900181)
+            (3,441.0180165576279)
+            (4,439.9542562298286)
+            (5,439.08624116188116)
+            (6,438.7280097188989)
+            (7,438.40270464065793)
+            (8,438.3358043285833)
+            (9,438.14090521303626)
+            (10,438.0749057247194)
+        }
+        ;
+    \addlegendentry {stationary AR}
+    \addplot[mark={o}, red]
+        coordinates {
+            (1,614.9987657596195)
+            (2,488.87369304138787)
+            (3,465.04590360226075)
+            (4,462.8492753451183)
+            (5,462.21954877183487)
+            (6,461.88385214935784)
+            (7,461.67406428676753)
+            (8,461.5295624225907)
+            (9,461.42220585169713)
+            (10,461.33749680275963)
+        }
+        ;
+    \addlegendentry {time-varying AR}
+\end{axis}
+\end{tikzpicture}

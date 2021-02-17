@@ -1,0 +1,54 @@
+\begin{tikzpicture}
+\begin{axis}[xlabel={segment number}, ylabel={Free energy [nats]}, legend pos={outer north east}, legend cell align={{left}}, scale={1.0}, grid={major}, xmin={291}, xmax={295}]
+    \addplot[mark={square*}, blue]
+        coordinates {
+            (291,-106.95949039603317)
+            (292,-143.3387178195213)
+            (293,-12.00062284296603)
+            (294,-138.46822920755704)
+            (295,-148.62228577967977)
+        }
+        ;
+    \addlegendentry {RW}
+    \addplot[mark={triangle*}, green]
+        coordinates {
+            (291,-121.55186151925551)
+            (292,-143.27676086987012)
+            (293,37.29817213471222)
+            (294,34.84767197314221)
+            (295,69.37249231202178)
+        }
+        ;
+    \addlegendentry {AR(1)}
+    \addplot[mark={*}, black]
+        coordinates {
+            (291,-128.76003045615334)
+            (292,-132.0716737699334)
+            (293,14.097712022986354)
+            (294,-18.707591498381955)
+            (295,79.49572316357677)
+        }
+        ;
+    \addlegendentry {AR(2)}
+    \addplot[mark={o}, red]
+        coordinates {
+            (291,-119.30403386094174)
+            (292,-139.61379651903155)
+            (293,40.82761303757071)
+            (294,55.07651019229676)
+            (295,62.588788974709246)
+        }
+        ;
+    \addlegendentry {TVAR(1)}
+    \addplot[mark={x}, cyan]
+        coordinates {
+            (291,-122.07433853693354)
+            (292,-124.79769259001546)
+            (293,-118.75038631990023)
+            (294,-25.817173084054517)
+            (295,53.60580190594736)
+        }
+        ;
+    \addlegendentry {TVAR(2)}
+\end{axis}
+\end{tikzpicture}

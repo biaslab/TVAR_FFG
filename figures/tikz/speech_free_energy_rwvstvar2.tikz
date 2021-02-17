@@ -1,0 +1,54 @@
+\begin{tikzpicture}
+\begin{axis}[xlabel={segment number}, ylabel={Free energy [nats]}, legend pos={outer north east}, legend cell align={{left}}, scale={1.0}, grid={major}, xmin={60}, xmax={64}]
+    \addplot[mark={square*}, blue]
+        coordinates {
+            (60,-85.23935566829621)
+            (61,-130.94885569008332)
+            (62,-207.91235796735765)
+            (63,-199.85380406905236)
+            (64,-193.29100419860762)
+        }
+        ;
+    \addlegendentry {RW}
+    \addplot[mark={triangle*}, green]
+        coordinates {
+            (60,-92.85119877287244)
+            (61,-136.45114216654056)
+            (62,-150.9372632093536)
+            (63,55.17328970014194)
+            (64,-192.74458511524895)
+        }
+        ;
+    \addlegendentry {AR(1)}
+    \addplot[mark={*}, black]
+        coordinates {
+            (60,-81.28802782931652)
+            (61,-111.59374497140317)
+            (62,-197.56998076976876)
+            (63,-185.1613110353878)
+            (64,-177.31675511453324)
+        }
+        ;
+    \addlegendentry {AR(2)}
+    \addplot[mark={o}, red]
+        coordinates {
+            (60,-89.256013433747)
+            (61,-133.92543074941307)
+            (62,-198.21862957197035)
+            (63,-191.6987168057364)
+            (64,-186.60370787380617)
+        }
+        ;
+    \addlegendentry {TVAR(1)}
+    \addplot[mark={x}, cyan]
+        coordinates {
+            (60,-74.29609478469119)
+            (61,-99.75402379145902)
+            (62,-166.96670425963455)
+            (63,-160.03383387291333)
+            (64,-156.34675471393214)
+        }
+        ;
+    \addlegendentry {TVAR(2)}
+\end{axis}
+\end{tikzpicture}
