@@ -1,0 +1,3 @@
+[deps]
+ForneyLab = "9fc3f58a-c2cc-5bff-9419-6a294fefdca9"
+SampledSignals = "bd7594eb-a658-542f-9e75-4c4d8908c167"
