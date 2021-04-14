@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+\begin{axis}[ybar, enlargelimits={0.15}, ylabel={Free energy [nats]}, symbolic x coords={TVAR(1),TVAR(2),TVAR(3),TVAR(4)}, nodes near coords, nodes near coords align={vertical}]
+    \addplot
+        coordinates {
+            (TVAR(1),3.12614871887216)
+            (TVAR(2),3.095818881144393)
+            (TVAR(3),3.0394456508321044)
+            (TVAR(4),3.0668476386979036)
+        }
+        ;
+\end{axis}
+\end{tikzpicture}

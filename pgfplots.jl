@@ -149,7 +149,7 @@ y = d["observed"]
 
 n_samples = length(d["real"])
 
-xmin=2000; xmax=2200
+xmin=2000; xmax=2050
 ar1 = @pgf Axis({xlabel="day",
            ylabel="temperature",
            legend_pos = "south east",
@@ -176,7 +176,7 @@ ar1 = @pgf Axis({xlabel="day",
 pgfsave("figures/tikz/weather_ar1.tikz", ar1)
 
 
-xmin=2000; xmax=2200
+xmin=2000; xmax=2050
 ar2 = @pgf Axis({xlabel="day",
            ylabel="temperature",
            legend_pos = "south east",
@@ -203,10 +203,10 @@ ar2 = @pgf Axis({xlabel="day",
 pgfsave("figures/tikz/weather_ar2.tikz", ar2)
 
 
-xmin=2000; xmax=2200
+xmin=2150; xmax=2200
 ar3 = @pgf Axis({xlabel="day",
            ylabel="temperature",
-           legend_pos = "south east",
+           legend_pos = "outer north east",
            legend_cell_align="{left}",
            scale = 1.0,
            grid = "major",
@@ -219,18 +219,18 @@ ar3 = @pgf Axis({xlabel="day",
             {x = "x", y = "y"},
              x = collect(xmin:xmax), y = y[xmin:xmax]
         ),
-    ), LegendEntry("observations"),
-    Plot({no_marks,color="magenta"}, Coordinates(collect(xmin:xmax), x[xmin:xmax])), LegendEntry("real"),
+    ), LegendEntry("measured"),
+    Plot({no_marks,color="magenta"}, Coordinates(collect(xmin:xmax), x[xmin:xmax])), LegendEntry("actual"),
     Plot({no_marks,color="black", style ="{dashed}"}, Coordinates(collect(xmin:xmax), params_x_3[1][1, :][2:end][xmin:xmax])),
     Plot({"name path=f", no_marks,color="black",opacity=0.2 }, Coordinates(collect(xmin:xmax), params_x_3[1][1, :][2:end][xmin:xmax] .+  sqrt.(inv.(params_x_3[2][1, 1, :][2:end][xmin:xmax])))),
     Plot({"name path=g", no_marks, color="black",opacity=0.2}, Coordinates(collect(xmin:xmax), params_x_3[1][1, :][2:end][xmin:xmax] .-  sqrt.(inv.(params_x_3[2][1, 1, :][2:end][xmin:xmax])))),
     Plot({ thick, color = "black", fill = "black", opacity = 0.2 },
-            raw"fill between [of=f and g]"), LegendEntry("inferred"))
+            raw"fill between [of=f and g]"), LegendEntry("estimated"))
 
 pgfsave("figures/tikz/weather_ar3.tikz", ar3)
 
 
-xmin=2000; xmax=2200
+xmin=2000; xmax=2050
 ar3 = @pgf Axis({xlabel="day",
            ylabel="temperature",
            legend_pos = "south east",
@@ -262,6 +262,7 @@ fe_2 = reshape(sum(FE_2, dims=1) ./ length(y), (10, ))
 fe_3 = reshape(sum(FE_3, dims=1) ./ length(y), (10, ))
 fe_4 = reshape(sum(FE_4, dims=1) ./ length(y), (10, ))
 
+vmp_iter = length(fe_4)
 n_samples = length(process_set[index])
 weather_vmp_iterations = @pgf Axis({xlabel="iteration",
                   ylabel="Free energy [nats]",
@@ -310,6 +311,21 @@ weather_vmp_over_time = @pgf Axis({xlabel="last VMP iteration of a day",
 
 pgfsave("figures/tikz/weather_vmp_over_time.tikz", weather_vmp_over_time)
 
+
+
+@pgf Axis(
+    {
+        ybar,
+        enlargelimits = 0.15,
+        ylabel = "Free energy [nats]",
+        symbolic_x_coords=["TVAR(1)", "TVAR(2)", "TVAR(3)", "TVAR(4)"],
+        nodes_near_coords,
+        nodes_near_coords_align={vertical},
+    },
+    Plot(Coordinates([("TVAR(1)", fe_1[end]), ("TVAR(2)", fe_2[end]), ("TVAR(3)", fe_3[end]), ("TVAR(4)", fe_4[end])]))
+)
+
+pgfsave("figures/tikz/weather_fe_bar_plot.tikz", weather_vmp_over_time)
 
 # NOTE: Speech
 d = load("data/speech/signal.jld")
