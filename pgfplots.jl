@@ -149,6 +149,27 @@ y = d["observed"]
 
 n_samples = length(d["real"])
 
+xmin=2000; xmax=2200
+weather_data = @pgf Axis({xlabel="day",
+           ylabel="temperature",
+           legend_pos = "south east",
+           legend_cell_align="{left}",
+           scale = 1.0,
+           grid = "major",
+           xmin=xmin, xmax=xmax,
+    },
+    Plot(
+        {only_marks,color="black",opacity=0.6, mark="x"},
+        Table(
+            {x = "x", y = "y"},
+             x = collect(xmin:xmax), y = y[xmin:xmax]
+        ),
+    ), LegendEntry("measured"),
+    Plot({no_marks,color="magenta"}, Coordinates(collect(xmin:xmax), x[xmin:xmax])), LegendEntry("latent"))
+
+pgfsave("figures/tikz/weather_data.tikz", weather_data)
+
+
 xmin=2000; xmax=2050
 ar1 = @pgf Axis({xlabel="day",
            ylabel="temperature",
@@ -166,7 +187,7 @@ ar1 = @pgf Axis({xlabel="day",
              x = collect(xmin:xmax), y = y[xmin:xmax]
         ),
     ), LegendEntry("observations"),
-    Plot({no_marks,color="magenta"}, Coordinates(collect(xmin:xmax), x[xmin:xmax])), LegendEntry("real"),
+    Plot({no_marks,color="magenta"}, Coordinates(collect(xmin:xmax), x[xmin:xmax])), LegendEntry("latent"),
     Plot({no_marks,color="black", style ="{dashed}"}, Coordinates(collect(xmin:xmax), params_x_1[1][1, :][2:end][xmin:xmax])),
     Plot({"name path=f", no_marks,color="black",opacity=0.2 }, Coordinates(collect(xmin:xmax), params_x_1[1][1, :][2:end][xmin:xmax] .+  sqrt.(inv.(params_x_1[2][1, 1, :][2:end][xmin:xmax])))),
     Plot({"name path=g", no_marks, color="black",opacity=0.2}, Coordinates(collect(xmin:xmax), params_x_1[1][1, :][2:end][xmin:xmax] .-  sqrt.(inv.(params_x_1[2][1, 1, :][2:end][xmin:xmax])))),
@@ -193,7 +214,7 @@ ar2 = @pgf Axis({xlabel="day",
              x = collect(xmin:xmax), y = y[xmin:xmax]
         ),
     ), LegendEntry("observations"),
-    Plot({no_marks,color="magenta"}, Coordinates(collect(xmin:xmax), x[xmin:xmax])), LegendEntry("real"),
+    Plot({no_marks,color="magenta"}, Coordinates(collect(xmin:xmax), x[xmin:xmax])), LegendEntry("latent"),
     Plot({no_marks,color="black", style ="{dashed}"}, Coordinates(collect(xmin:xmax), params_x_2[1][1, :][2:end][xmin:xmax])),
     Plot({"name path=f", no_marks,color="black",opacity=0.2 }, Coordinates(collect(xmin:xmax), params_x_2[1][1, :][2:end][xmin:xmax] .+  sqrt.(inv.(params_x_2[2][1, 1, :][2:end][xmin:xmax])))),
     Plot({"name path=g", no_marks, color="black",opacity=0.2}, Coordinates(collect(xmin:xmax), params_x_2[1][1, :][2:end][xmin:xmax] .-  sqrt.(inv.(params_x_2[2][1, 1, :][2:end][xmin:xmax])))),
@@ -247,7 +268,7 @@ ar3 = @pgf Axis({xlabel="day",
              x = collect(xmin:xmax), y = y[xmin:xmax]
         ),
     ), LegendEntry("observations"),
-    Plot({no_marks,color="magenta"}, Coordinates(collect(xmin:xmax), x[xmin:xmax])), LegendEntry("real"),
+    Plot({no_marks,color="magenta"}, Coordinates(collect(xmin:xmax), x[xmin:xmax])), LegendEntry("latent"),
     Plot({no_marks,color="black", style ="{dashed}"}, Coordinates(collect(xmin:xmax), params_x_4[1][1, :][2:end][xmin:xmax])),
     Plot({"name path=f", no_marks,color="black",opacity=0.2 }, Coordinates(collect(xmin:xmax), params_x_4[1][1, :][2:end][xmin:xmax] .+  sqrt.(inv.(params_x_4[2][1, 1, :][2:end][xmin:xmax])))),
     Plot({"name path=g", no_marks, color="black",opacity=0.2}, Coordinates(collect(xmin:xmax), params_x_4[1][1, :][2:end][xmin:xmax] .-  sqrt.(inv.(params_x_4[2][1, 1, :][2:end][xmin:xmax])))),
@@ -313,23 +334,24 @@ pgfsave("figures/tikz/weather_vmp_over_time.tikz", weather_vmp_over_time)
 
 
 
-@pgf Axis(
+weather_fe_bar_plot = @pgf Axis(
     {
         ybar,
+        xlabel = "Models",
         enlargelimits = 0.15,
         ylabel = "Free energy [nats]",
         symbolic_x_coords=["TVAR(1)", "TVAR(2)", "TVAR(3)", "TVAR(4)"],
         nodes_near_coords,
-        nodes_near_coords_align={vertical},
+        nodes_near_coords_align={vertical}, grid = "major",
     },
     Plot(Coordinates([("TVAR(1)", fe_1[end]), ("TVAR(2)", fe_2[end]), ("TVAR(3)", fe_3[end]), ("TVAR(4)", fe_4[end])]))
 )
 
-pgfsave("figures/tikz/weather_fe_bar_plot.tikz", weather_vmp_over_time)
+pgfsave("figures/tikz/weather_fe_bar_plot.tikz", weather_fe_bar_plot)
 
 # NOTE: Speech
 d = load("data/speech/signal.jld")
-x, y = d["real"], d["observed"]
+x, y = d["latent"], d["observed"]
 x, y = reshape(x, (size(x, 1),)), reshape(y, (size(y, 1),))
 cl, ns = x, y
 # dividing into 10ms frames with 2.5ms overlap
