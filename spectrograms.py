@@ -7,6 +7,9 @@ fs, y = wavfile.read("data/speech/clean.wav")
 fs, x = wavfile.read("data/speech/noised.wav")
 fs, z = wavfile.read("data/speech/filtered.wav")
 
+y = y[0:len(y) - 100]
+x = x[0:len(x) - 100]
+z = z[0:len(z) - 100]
 
 fig, axs = plt.subplots(3)
 axs[0].specgram(y, Fs=fs)
