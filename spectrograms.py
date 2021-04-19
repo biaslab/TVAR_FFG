@@ -21,7 +21,7 @@ axs[2].set_title("Filtered")
 
 
 axs[2].set(xlabel='Time s', ylabel='Hz')
-# plt.savefig("data/speech/result.pdf")
+plt.savefig("data/speech/result.pdf")
 
 
 import tikzplotlib
